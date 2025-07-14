@@ -1,0 +1,80 @@
+{
+  "info": {
+    "_postman_id": "b1e1e1e1-1234-5678-9abc-def012345678",
+    "name": "Event Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for Event Management System API"
+  },
+  "item": [
+    {
+      "name": "Create Event",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Sample Event\",\n  \"location\": \"Mumbai\",\n  \"start_time\": \"2025-07-15T10:00:00+05:30\",\n  \"end_time\": \"2025-07-15T12:00:00+05:30\",\n  \"max_capacity\": 100\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/events/",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "events", ""]
+        }
+      }
+    },
+    {
+      "name": "List Upcoming Events",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/events/",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "events", ""]
+        }
+      }
+    },
+    {
+      "name": "Register Attendee",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Alice\",\n  \"email\": \"alice@example.com\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/events/1/register/",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "events", "1", "register", ""]
+        }
+      }
+    },
+    {
+      "name": "List Attendees (paginated)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/events/1/attendees/?page=1&page_size=10",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "events", "1", "attendees", ""],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "page_size", "value": "10" }
+          ]
+        }
+      }
+    }
+  ]
+} 
