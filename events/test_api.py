@@ -184,3 +184,29 @@ def test_monkey_attendee_registration():
         else:
             assert response.status_code == 400
     assert event.attendees.count() == event.max_capacity 
+
+@pytest.mark.django_db
+def test_update_event_timezone_shifts_times():
+    client = APIClient()
+    # Create event in IST
+    url = reverse('event-list-create')
+    data = {
+        "name": "TZ Event",
+        "location": "Delhi",
+        "start_time": "2025-07-15T10:00:00+05:30",
+        "end_time": "2025-07-15T12:00:00+05:30",
+        "max_capacity": 10,
+        "timezone": "Asia/Kolkata"
+    }
+    response = client.post(url, data, format='json')
+    assert response.status_code == 201
+    event_id = response.data['id']
+    # Update timezone to America/New_York
+    patch_url = reverse('event-update', args=[event_id])
+    patch_data = {"timezone": "America/New_York"}
+    patch_response = client.patch(patch_url, patch_data, format='json')
+    assert patch_response.status_code == 200
+    # The local time should remain 10:00 and 12:00, but in New York timezone
+    assert patch_response.data['start_time'].startswith("2025-07-15T10:00:00")
+    assert patch_response.data['end_time'].startswith("2025-07-15T12:00:00")
+    assert patch_response.data['timezone'] == "America/New_York" 

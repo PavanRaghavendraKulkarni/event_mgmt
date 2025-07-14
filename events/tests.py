@@ -56,10 +56,18 @@ class EventAPITestCase(TestCase):
         self.assertIn('max capacity', str(response.data))
 
     def test_attendee_list_pagination(self):
-        url = reverse('attendee-register', args=[self.event.id])
+        # Create a new event with higher capacity for pagination test
+        event = Event.objects.create(
+            name="Paginate Event",
+            location="Paginate Location",
+            start_time=timezone.now() + timedelta(days=1),
+            end_time=timezone.now() + timedelta(days=2),
+            max_capacity=20
+        )
+        url = reverse('attendee-register', args=[event.id])
         for i in range(15):
             self.client.post(url, {"name": f"User{i}", "email": f"user{i}@example.com"}, format='json')
-        list_url = reverse('attendee-list', args=[self.event.id])
+        list_url = reverse('attendee-list', args=[event.id])
         response = self.client.get(list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('results', response.data)

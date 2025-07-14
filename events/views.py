@@ -17,6 +17,10 @@ class EventListCreateView(generics.ListCreateAPIView):
         now = timezone.now()
         return Event.objects.filter(start_time__gte=now).order_by('start_time')
 
+class EventUpdateView(generics.RetrieveUpdateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
 class AttendeeRegisterView(APIView):
     def post(self, request, event_id):
         try:

@@ -17,4 +17,22 @@ def to_utc(dt):
         return None
     if timezone.is_naive(dt):
         dt = IST.localize(dt)
+    return dt.astimezone(UTC)
+
+def to_local(dt, tz_str):
+    import pytz
+    if dt is None:
+        return None
+    tz = pytz.timezone(tz_str)
+    if timezone.is_naive(dt):
+        dt = UTC.localize(dt)
+    return dt.astimezone(tz)
+
+def to_utc_from_local(dt, tz_str):
+    import pytz
+    if dt is None:
+        return None
+    tz = pytz.timezone(tz_str)
+    if timezone.is_naive(dt):
+        dt = tz.localize(dt)
     return dt.astimezone(UTC) 

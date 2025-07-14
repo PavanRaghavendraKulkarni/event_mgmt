@@ -75,6 +75,26 @@
           ]
         }
       }
+    },
+    {
+      "name": "Update Event Timezone",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"timezone\": \"America/New_York\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/events/1/update/",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "events", "1", "update", ""]
+        }
+      }
     }
   ]
 } 

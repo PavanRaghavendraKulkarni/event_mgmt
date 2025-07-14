@@ -70,8 +70,20 @@ Content-Type: application/json
 GET /api/events/{event_id}/attendees/?page=1&page_size=10
 ```
 
+### Update Event Timezone
+```
+PATCH /api/events/{event_id}/update/
+Content-Type: application/json
+{
+  "timezone": "America/New_York"
+}
+```
+
+- This will change the event's timezone and shift start/end times so the local time remains the same in the new timezone.
+
 ## Timezone Handling
-- All API input/output datetimes are in IST (`+05:30`).
+- Each event has a `timezone` field (default: Asia/Kolkata, but can be any valid IANA timezone string).
+- All API input/output datetimes are in the event's timezone.
 - Internally, times are stored in UTC for consistency.
 
 ## Running Tests

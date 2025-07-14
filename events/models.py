@@ -7,6 +7,7 @@ class Event(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     max_capacity = models.PositiveIntegerField()
+    timezone = models.CharField(max_length=64, default='Asia/Kolkata')
 
     def __str__(self):
         return f"{self.name} @ {self.location} ({self.start_time})"
